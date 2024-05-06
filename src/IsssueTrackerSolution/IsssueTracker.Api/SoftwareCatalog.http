@@ -10,8 +10,8 @@ POST {{apiUrl}}/catalog
 Content-Type: application/json
 
 {
-  "title": "Visual Studio Code",
-  "description": "Editor for Developers and Data Analysis, etc."
+  "title": "Visual Studio",
+  "description": "An integrated dev environment for all"  
 }
 
 ###
