@@ -11,11 +11,11 @@ public class CatalogTests
     {
         var stubbedToken = new AuthenticationStub()
             .With(ClaimTypes.NameIdentifier, "carl@aol.com") // Sub claim
-            .With(ClaimTypes.Role, "SotwareCenter");  // this adds this role.
+            .With(ClaimTypes.Role, "SoftwareCenter");  // this adds this role.
 
         await using var host = await AlbaHost.For<Program>(stubbedToken);
 
-        var itemToAdd = new CreateCatalogItemRequest("Notepad", "A text editor for windows");
+        var itemToAdd = new CreateCatalogItemRequest("Notepad", "A Text Editor on Windows");
 
         var response = await host.Scenario(api =>
         {
@@ -27,7 +27,7 @@ public class CatalogTests
 
         Assert.NotNull(actualResponse);
         Assert.Equal("Notepad", actualResponse.Title);
-        Assert.Equal("A text editor for windows", actualResponse.Description);
+        Assert.Equal("A Text Editor on Windows", actualResponse.Description);
     }
 
     [Fact]
