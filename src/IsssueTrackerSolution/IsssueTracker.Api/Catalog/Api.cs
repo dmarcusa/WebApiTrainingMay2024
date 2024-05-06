@@ -14,6 +14,6 @@ public class Api : ControllerBase
         //if it is cool, maybe save it to a db or something?
         //and what are we going to return
         var response = new CatalogItemResponse(Guid.NewGuid(), request.Title, request.Description);
-        return Ok();
+        return Ok(response);
     }
 }

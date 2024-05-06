@@ -15,5 +15,5 @@ Content-Type: application/json
 }
 
 ###
-GET {{apiUrl}}/catalog/
+GET {{apiUrl}}/catalog/9a7cc2be-a55a-4806-9d93-bbd16621d812
 

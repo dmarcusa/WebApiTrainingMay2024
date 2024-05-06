@@ -4,4 +4,4 @@
 //they are C# types that weill be desearilize or serialize from json coming ontp our out of api
 public record CreateCatalogItemRequest(string Title, string Description);
 
-public record CatalogItemResponse(Guid id, string Title, string Description);
+public record CatalogItemResponse(Guid Id, string Title, string Description);
