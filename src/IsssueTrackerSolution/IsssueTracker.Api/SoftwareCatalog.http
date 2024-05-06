@@ -2,21 +2,27 @@
 
 @apiUrl = https://localhost:1338
 
+@ordinaryUseToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IklUVVN0dWRlbnQiLCJzdWIiOiJJVFVTdHVkZW50IiwianRpIjoiNDIwOWE0NDMiLCJhdWQiOlsiaHR0cDovL2xvY2FsaG9zdDozOTgyMyIsImh0dHBzOi8vbG9jYWxob3N0OjQ0MzM3IiwiaHR0cDovL2xvY2FsaG9zdDoxMzM3IiwiaHR0cHM6Ly9sb2NhbGhvc3Q6MTMzOCJdLCJuYmYiOjE3MTUwMjUyNzQsImV4cCI6MTcyMjk3NDA3NCwiaWF0IjoxNzE1MDI1Mjc1LCJpc3MiOiJkb3RuZXQtdXNlci1qd3RzIn0.LUSDT-xcHmwQiYTBMEuajR4nTXkjh-ig16niTheoh6Y
+
+@softwareCenter=Bearer  eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InN1ZUBhb2wuY29tIiwic3ViIjoic3VlQGFvbC5jb20iLCJqdGkiOiJiYzFmNTU1MyIsInJvbGUiOlsiU29mdHdhcmVDZW50ZXIiLCJCb3NzIl0sImF1ZCI6WyJodHRwOi8vbG9jYWxob3N0OjM5ODIzIiwiaHR0cHM6Ly9sb2NhbGhvc3Q6NDQzMzciLCJodHRwOi8vbG9jYWxob3N0OjEzMzciLCJodHRwczovL2xvY2FsaG9zdDoxMzM4Il0sIm5iZiI6MTcxNTAyNjAxOCwiZXhwIjoxODA5NTQ3NjE4LCJpYXQiOjE3MTUwMjYwMTksImlzcyI6ImRvdG5ldC11c2VyLWp3dHMifQ.uOk29RvCV7C46Wx0zLIkYdD4AaH_TRqoXOWEpY2E7Bo
+
 # Members of the Software Center can add new items to our catalog of supported software
 # We have a "COLLECTION" of supported software, and we want to APPEND a new subordinate resource (DOCUMENT) 
 #to that collection.
 
 POST {{apiUrl}}/catalog
+Authorization: {{softwareCenter}}
 Content-Type: application/json
 
 {
-  "title": "Visual Studio",
-  "description": "An integrated dev environment for all"  
+  "title": "JBrainRaider",
+  "description": "An integrated dev environment for all AGAIN"  
 }
 
 ###
 GET {{apiUrl}}/catalog/
-
+Authorization: {{ordinaryUseToken}}
 ###
 GET {{apiUrl}}/catalog/b2750b7a-5132-49b3-b5be-b6b3bdd55724
+Authorization: {{ordinaryUseToken}}
 

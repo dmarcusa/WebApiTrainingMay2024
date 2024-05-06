@@ -5,6 +5,17 @@ using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAuthentication().AddJwtBearer(); // the services that let us use [Authorize section]
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("IsSoftwareAdmin", policy =>
+    {
+        policy.RequireRole("SoftwareCenter");
+        //policy.RequireUserName("bob@aol.com");
+    });
+});
+
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
@@ -26,8 +37,6 @@ builder.Services.AddMarten(options =>
     options.Connection(connectionString);
 }).UseLightweightSessions();
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -39,6 +48,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
