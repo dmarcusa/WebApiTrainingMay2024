@@ -6,6 +6,17 @@ namespace IsssueTracker.Api.Catalog;
 
 public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSession session) : ControllerBase
 {
+
+    [HttpGet("/catalog")]
+    public async Task<ActionResult> GetCatalogItemAsync(CancellationToken token)
+    {
+        var data = await session.Query<CatalogItem>()
+            .Select(c => new CatalogItemResponse(c.Id, c.Title, c.Description))
+            .ToListAsync(token);
+        return Ok(new { data });
+        //Ok(data);
+    }
+
     [HttpPost("/catalog")]
     public async Task<ActionResult> AddACatalogItemAsync(
         [FromBody] CreateCatalogItemRequest request,
@@ -33,18 +44,5 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
 
         var response = new CatalogItemResponse(entityToSave.Id, request.Title, request.Description);
         return Ok(response); //I have stored this thing in a way I can get to it, it is now part of the collection
-    }
-
-    [HttpGet("/catalog")]
-    public async Task<ActionResult> GetCatalogItemAsync(
-    [FromBody] CreateCatalogItemRequest request,
-    CancellationToken token)
-    {
-        //get the json data they sent and look at it. Is it cool?
-        //If not, send them an error (400, with some details)
-        //if it is cool, maybe save it to a db or something?
-        //and what are we going to return
-        var response = new CatalogItemResponse(Guid.NewGuid(), request.Title, request.Description);
-        return Ok(response);
     }
 }
