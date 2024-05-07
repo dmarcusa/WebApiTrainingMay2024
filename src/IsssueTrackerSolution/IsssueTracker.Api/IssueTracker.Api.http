@@ -1,6 +1,6 @@
-﻿@IsssueTracker.Api_HostAddress = https://localhost:1338
+﻿@IssueTracker.Api_HostAddress = https://localhost:1338
 
-POST {{IsssueTracker.Api_HostAddress}}/catalog
+POST {{IssueTracker.Api_HostAddress}}/catalog
 Content-Type: application/json
 
 {
@@ -9,6 +9,6 @@ Content-Type: application/json
 
 ###
 
-GET {{IsssueTracker.Api_HostAddress}}/catalog/{id:guid}
+GET {{IssueTracker.Api_HostAddress}}/catalog/{id:guid}
 
 ###

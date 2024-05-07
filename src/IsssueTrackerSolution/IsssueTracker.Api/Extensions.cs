@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace IsssueTracker.Api;
+namespace IssueTracker.Api;
 
 public static class Extensions
 {
