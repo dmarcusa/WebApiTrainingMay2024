@@ -58,4 +58,25 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
         }
         return NoContent();
     }
+
+    // PUT //catalog/387...
+    [HttpPut("{id:guid}")]
+    public async Task<ActionResult> ReplaceCatalogItemAsync(Guid id, [FromBody] ReplaceCatalogItemRequest request, CancellationToken token)
+    {
+        var item = await session.LoadAsync<CatalogItem>(id);
+
+        if (item != null)
+        {
+            return NotFound();
+        }
+        if (id != request.Id)
+        {
+            return BadRequest("Ids don't match");
+        }
+        item.Title = request.Title;
+        item.Description = request.Description;
+        session.Store(item);
+        await session.SaveChangesAsync();
+        return Ok();
+    }
 }

@@ -10,12 +10,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication().AddJwtBearer(); // the services that let us use [Authorize section]
 builder.Services.AddScoped<IAuthorizationHandler, ShouldBeCreatorOfCatalogItemRequirementHandler>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsSoftwareAdmin", policy =>
     {
         policy.RequireRole("SoftwareCenter");
-        policy.AddRequirements(new ShouldBeCreatorToDeleteCatalogItemRequirement());
+        policy.AddRequirements(new ShouldBeCreatorToAlterCatalogItemRequirement());
         //policy.RequireUserName("bob@aol.com");
     });
 });
