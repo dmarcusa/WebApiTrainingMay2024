@@ -1,0 +1,14 @@
+﻿@IsssueTracker.Api_HostAddress = https://localhost:1338
+
+POST {{IsssueTracker.Api_HostAddress}}/catalog
+Content-Type: application/json
+
+{
+  //CreateCatalogItemRequest
+}
+
+###
+
+GET {{IsssueTracker.Api_HostAddress}}/catalog/{id:guid}
+
+###

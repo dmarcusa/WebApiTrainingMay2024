@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsssueTracker.Api", "IsssueTracker.Api\IsssueTracker.Api.csproj", "{8E0CAB5A-D72D-4725-80D0-D60009462A47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IsssueTracker.Api", "IsssueTracker.Api\IsssueTracker.Api.csproj", "{8E0CAB5A-D72D-4725-80D0-D60009462A47}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.ContractTests", "IssueTracker.ContractTests\IssueTracker.ContractTests.csproj", "{B4297388-B654-4F47-AD7C-DB493FF71BA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IssueTracker.ContractTests", "IssueTracker.ContractTests\IssueTracker.ContractTests.csproj", "{B4297388-B654-4F47-AD7C-DB493FF71BA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IssueTracker.UnitTests", "IssueTracker.UnitTests\IssueTracker.UnitTests.csproj", "{EC875457-E669-4659-A0B1-5A6C1FD37EF3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B4297388-B654-4F47-AD7C-DB493FF71BA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B4297388-B654-4F47-AD7C-DB493FF71BA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B4297388-B654-4F47-AD7C-DB493FF71BA7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC875457-E669-4659-A0B1-5A6C1FD37EF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC875457-E669-4659-A0B1-5A6C1FD37EF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC875457-E669-4659-A0B1-5A6C1FD37EF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC875457-E669-4659-A0B1-5A6C1FD37EF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

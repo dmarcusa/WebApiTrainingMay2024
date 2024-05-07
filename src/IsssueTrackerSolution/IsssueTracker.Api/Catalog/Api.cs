@@ -38,7 +38,17 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
             //BadRequest(validation.ToDictionary());
         }
 
-        var entityToSave = new CatalogItem(Guid.NewGuid(), request.Title, request.Description, userId, DateTimeOffset.Now);
+        var entityToSave = request.MapToCatalogItem(userId);
+        //new CatalogItem(Guid.NewGuid(), request.Title, request.Description, userId, DateTimeOffset.Now);
+        //new CatalogItem
+        //{
+        //    Id = Guid.NewGuid(),
+        //    AddedBy = userId,
+        //    CreatedAt = DateTime.UtcNow,
+        //    Description = request.Description,
+        //    Title = request.Title
+        //};
+
         session.Store(entityToSave);
         await session.SaveChangesAsync(); //do the actual work
         //get the json data they sent and look at it. Is it cool?
@@ -49,7 +59,8 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
         //and what are we going to return
         //return to them, from the entity the thing we are giving the, as receipt
 
-        var response = new CatalogItemResponse(entityToSave.Id, request.Title, request.Description);
+        var response = entityToSave.MapToResponse();
+        //new CatalogItemResponse(entityToSave.Id, request.Title, request.Description);
         return Ok(response); //I have stored this thing in a way I can get to it, it is now part of the collection
     }
 
