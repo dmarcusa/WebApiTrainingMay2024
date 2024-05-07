@@ -22,5 +22,5 @@ public class CatalogItem
 
     public DateTimeOffset CreatedAt { get; set; }
 
-    public DateTimeOffset? RemoveAt { get; set; } = null;
+    public DateTimeOffset? RemovedAt { get; set; } = null;
 }
