@@ -1,18 +1,21 @@
 using FluentValidation;
 using IsssueTracker.Api.Catalog;
+using IssueTracker.Api.Catalog;
 using Marten;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
 using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAuthentication().AddJwtBearer(); // the services that let us use [Authorize section]
-
+builder.Services.AddScoped<IAuthorizationHandler, ShouldBeCreatorOfCatalogItemRequirementHandler>();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsSoftwareAdmin", policy =>
     {
         policy.RequireRole("SoftwareCenter");
+        policy.AddRequirements(new ShouldBeCreatorToDeleteCatalogItemRequirement());
         //policy.RequireUserName("bob@aol.com");
     });
 });
@@ -24,7 +27,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+//builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

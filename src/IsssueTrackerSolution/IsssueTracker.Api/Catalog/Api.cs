@@ -96,6 +96,11 @@ public class Api(IValidator<CreateCatalogItemRequest> validator, IDocumentSessio
         var storeItem = await session.LoadAsync<CatalogItem>(id);
         if (storeItem != null)
         {
+            var user = User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
+            //if (storeItem.AddedBy != user.Value)
+            //{
+            //    return StatusCode(403);
+            //}
             //if it does do a soft delete
             storeItem.RemoveAt = DateTimeOffset.Now;
             session.Store(storeItem); //update

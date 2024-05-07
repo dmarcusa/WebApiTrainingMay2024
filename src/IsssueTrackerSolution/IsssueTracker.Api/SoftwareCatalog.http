@@ -30,3 +30,7 @@ Authorization: {{ordinaryUseToken}}
 GET {{apiUrl}}/catalog/b2750b7a-5132-49b3-b5be-b6b3bdd55724
 Authorization: {{ordinaryUseToken}}
 
+###
+
+DELETE {{apiUrl}}/catalog/catalog/b2750b7a-5132-49b3-b5be-b6b3bdd55724
+

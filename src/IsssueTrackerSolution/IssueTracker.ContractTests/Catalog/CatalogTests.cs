@@ -21,8 +21,8 @@ public class CatalogTests
         {
             api.Post.Json(itemToAdd).ToUrl("/catalog");
             api.StatusCodeShouldBe(201);
-            api.Header("location").SingleValueShouldMatch("http://localhost/catalog/*.");
-            //regex api.Header("location").SingleValueShouldMatch(Utils.Constant);
+            //api.Header("location").SingleValueShouldMatch("http://localhost/catalog/*.");
+            api.Header("Location").SingleValueShouldMatch(Constants.GetLocationForPathRegex("catalog"));
         });
 
         var actualResponse = await response.ReadAsJsonAsync<CatalogItemResponse>();
@@ -53,16 +53,11 @@ public class CatalogTests
     [Fact]
     public async Task NewItemsCanBeAddedAndDeleted()
     {
-        // have a software admin add an item
-        // get the item
-        // delete the item
-
         var stubbedToken = new AuthenticationStub()
-    .With(ClaimTypes.NameIdentifier, "carl@aol.com") // Sub claim
-    .With(ClaimTypes.Role, "SoftwareCenter");  // this adds this role.
+         .With(ClaimTypes.NameIdentifier, "carl@aol.com") // Sub claim
+         .With(ClaimTypes.Role, "SoftwareCenter");  // this adds this role.
 
         await using var host = await AlbaHost.For<Program>(stubbedToken);
-
         var itemToAdd = new CreateCatalogItemRequest("Notepad", "A Text Editor on Windows");
 
         var response = await host.Scenario(api =>
@@ -79,26 +74,25 @@ public class CatalogTests
 
         var response2 = await host.Scenario(api =>
         {
-            api.Delete.Url("/catalog" + id);
+            api.Delete.Url("/catalog/" + id);
             api.StatusCodeShouldBe(204);
         });
 
         await host.Scenario(api =>
         {
-            api.Get.Url("/catalog" + id);
+            api.Get.Url("/catalog/" + id);
             api.StatusCodeShouldBe(404);
         });
     }
 
     [Fact]
-    public async Task UserCanOnlyDeleteItemsTheyCreated()
+    public async Task UsersCanOnlyDeleteItemsTheyCreated()
     {
-        var stubbedToken = new AuthenticationStub()
-    .With(ClaimTypes.NameIdentifier, "carl@aol.com") // Sub claim
-    .With(ClaimTypes.Role, "SoftwareCenter");  // this adds this role.
+        var user1Token = new AuthenticationStub()
+         .With(ClaimTypes.NameIdentifier, "carl@aol.com") // Sub claim
+         .With(ClaimTypes.Role, "SoftwareCenter");  // this adds this role.
 
-        await using var host = await AlbaHost.For<Program>(stubbedToken);
-
+        await using var host = await AlbaHost.For<Program>(user1Token);
         var itemToAdd = new CreateCatalogItemRequest("Notepad", "A Text Editor on Windows");
 
         var response = await host.Scenario(api =>
@@ -113,16 +107,21 @@ public class CatalogTests
 
         var id = actualResponse.Id;
 
-        var response2 = await host.Scenario(api =>
+        var user2Token = new AuthenticationStub()
+        .With(ClaimTypes.NameIdentifier, "beth@aol.com") // Sub claim
+        .With(ClaimTypes.Role, "SoftwareCenter");  // this add
+
+        await using var host2 = await AlbaHost.For<Program>(user2Token);
+        var response2 = await host2.Scenario(api =>
         {
-            api.Delete.Url("/catalog" + id);
+            api.Delete.Url("/catalog/" + id);
             api.StatusCodeShouldBe(403);
         });
 
         await host.Scenario(api =>
         {
-            api.Get.Url("/catalog" + id);
-            api.StatusCodeShouldBe(202);
+            api.Get.Url("/catalog/" + id);
+            api.StatusCodeShouldBe(200);
         });
     }
 }
