@@ -1,6 +1,4 @@
 ﻿using FluentValidation;
-using IsssueTracker.Api;
-using IsssueTracker.Api.Catalog;
 using Marten;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -65,7 +63,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
     {
         var item = await session.LoadAsync<CatalogItem>(id);
 
-        if (item != null)
+        if (item is null)
         {
             return NotFound();
         }

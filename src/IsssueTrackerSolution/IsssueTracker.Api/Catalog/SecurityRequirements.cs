@@ -1,5 +1,4 @@
-﻿using IsssueTracker.Api.Catalog;
-using Marten;
+﻿using Marten;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 

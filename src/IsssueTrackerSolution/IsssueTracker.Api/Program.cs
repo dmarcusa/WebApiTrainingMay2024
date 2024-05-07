@@ -1,5 +1,4 @@
 using FluentValidation;
-using IsssueTracker.Api.Catalog;
 using IssueTracker.Api.Catalog;
 using Marten;
 using Microsoft.AspNetCore.Authorization;

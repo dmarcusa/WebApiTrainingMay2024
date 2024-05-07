@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Riok.Mapperly.Abstractions;
 
-namespace IsssueTracker.Api.Catalog;
+namespace IssueTracker.Api.Catalog;
 
 //"Models" are the things that leave or arrive from outside our service boundary
 //they are C# types that weill be desearilize or serialize from json coming ontp our out of api

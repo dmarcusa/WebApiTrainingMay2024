@@ -1,6 +1,6 @@
 ﻿using Alba;
 using Alba.Security;
-using IsssueTracker.Api.Catalog;
+using IssueTracker.Api.Catalog;
 using System.Security.Claims;
 
 namespace IssueTracker.ContractTests.Catalog;

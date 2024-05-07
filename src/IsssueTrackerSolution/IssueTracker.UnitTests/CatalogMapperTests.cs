@@ -1,4 +1,4 @@
-﻿using IsssueTracker.Api.Catalog;
+﻿using IssueTracker.Api.Catalog;
 
 namespace IssueTracker.UnitTests;
 public class CatalogMapperTests
