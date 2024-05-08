@@ -16,6 +16,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
     /// Add an item to the software catalog
     /// </summary>
     /// <param name="request"></param>
+    /// <param name="userIdentityService"></param>
     /// <param name="token"></param>
     /// <returns></returns>
     /// <response code="201"> The new software item</response>
@@ -25,7 +26,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult<CatalogItemResponse>> AddACatalogItemAsync(
        [FromBody] CreateCatalogItemRequest request,
-       UserIdentityService userIdentityService,
+       [FromServices] UserIdentityService userIdentityService,
        CancellationToken token)
     {
         var userId = await userIdentityService.GetUserSubAsync();
