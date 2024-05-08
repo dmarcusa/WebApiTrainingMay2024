@@ -1,5 +1,6 @@
 using FluentValidation;
 using IssueTracker.Api.Catalog;
+using IssueTracker.Api.Shared;
 using Marten;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.OpenApi.Models;
@@ -12,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddAuthentication().AddJwtBearer(); // the services that let us use [Authorize section]
 builder.Services.AddScoped<IAuthorizationHandler, ShouldBeCreatorOfCatalogItemRequirementHandler>();
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<UserIdentityService>();
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsSoftwareAdmin", policy =>
