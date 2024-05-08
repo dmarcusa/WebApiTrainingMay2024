@@ -1,5 +1,33 @@
-﻿namespace IssueTracker.Api.Users;
+﻿using IssueTracker.Api.Shared;
+using Marten;
+using Microsoft.AspNetCore.Mvc;
 
-public class Api
+namespace IssueTracker.Api.Users;
+
+public class Api(IDocumentSession session) : ControllerBase
 {
+    [HttpGet("/users/{id:guid}", Name = "user#get-by-id")]
+    public async Task<ActionResult> GetUserFronIdAsync(Guid id, CancellationToken token)
+    {
+        var user = await session.LoadAsync<UserInformation>(id, token);
+        if (user is null)
+        {
+            return NotFound();
+        }
+        else
+        {
+            var response = new UserInformationResponse
+            {
+                Id = user.Id
+            };
+            return Ok(response);
+        }
+    }
+}
+
+public record UserInformationResponse
+{
+    public Guid Id { get; set; }
+    public string? Name { get; set; }
+    public string? Email { get; set; }
 }
