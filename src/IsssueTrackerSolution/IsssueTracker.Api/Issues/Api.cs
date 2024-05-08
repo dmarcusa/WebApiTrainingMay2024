@@ -10,14 +10,31 @@ public class Api(UserIdentityService userIdentityService, IDocumentSession sessi
 {
     [HttpPost("/catalog/{catalogItemId:guid}/issues")]
     [Authorize]
-    public async Task<ActionResult<UserIssueResponse>> AddAnIssueAsync(Guid catalogItemId, [FromBody] UserCreateIssueRequestModel request)
+    public async Task<ActionResult<UserIssueResponse>> AddAnIssueAsync(
+        Guid catalogItemId,
+        [FromBody] UserCreateIssueRequestModel request,
+        CancellationToken token)
     {
-        var softwareExists = await session.Query<CatalogItem>().Where(c => c.Id == catalogItemId).AnyAsync();
-        if (!softwareExists)
+        var software = await session.Query<CatalogItem>()
+            .Where(c => c.Id == catalogItemId)
+            .Select(c => new IssueSoftwareEmbeddedResponse(c.Id, c.Title, c.Description))
+            .SingleOrDefaultAsync(token);
+        if (software is null)
         {
             return NotFound("No Software With That Id In The Catalog.");
         }
         var userInfo = await userIdentityService.GetUserInformationAsync();
+        var userUrl = Url.RouteUrl("users#get-by-id", new { id = userInfo.Id }) ?? throw new ChaosException("Need a good id");
+
+        var entity = new UserIssue
+        {
+            Id = userInfo.Id,
+            Status = IssueStatusType.Submitted,
+            User = userUrl,
+        };
+
+        session.Store(entity);
+        await session.SaveChangesAsync(token);
 
         var fakeResponse = new UserIssueResponse
         {
@@ -38,6 +55,15 @@ public record UserIssueResponse
     public string User { get; set; } = string.Empty;
     public IssueSoftwareEmbeddedResponse Software { get; set; }
     public IssueStatusType Status { get; set; } = IssueStatusType.Submitted;
+}
+
+public class UserIssue
+{
+    public Guid Id { get; set; }
+    public string User { get; set; } = string.Empty;
+    public IssueSoftwareEmbeddedResponse Software { get; set; }
+    public IssueStatusType Status { get; set; } = IssueStatusType.Submitted;
+    public DateTimeOffset DateTimeOffset { get; set; }
 }
 
 public record IssueSoftwareEmbeddedResponse(Guid Id, string Title, string Description);
