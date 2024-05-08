@@ -26,10 +26,10 @@ public class Api(ILogger<Api> logger) : ControllerBase
 
         var response = new StatusResponseModel
         {
-            Message = "Looks good",
+            Message = "Looks Good",
             CheckedAt = DateTime.UtcNow,
         };
-        logger.LogInformation("Finish the call");
+        logger.LogInformation("Finished the call");
         return Ok(response);
     }
 
@@ -42,7 +42,7 @@ public class Api(ILogger<Api> logger) : ControllerBase
     public record StatusRequestModel
     {
         [Required, MinLength(5), MaxLength(30)]
-        public string Message { get; init; } = string.Empty;
+        public string Message { get; set; } = string.Empty;
     }
 
     //public record StatusResponseModel(string Message, DateTimeOffset CheckedAt);
