@@ -22,7 +22,9 @@ public class ApiQueries(IQuerySession session) : ControllerBase
 
 
     [HttpGet("{id:guid}", Name = "catalog#get-by-id")]
-    public async Task<ActionResult> GetCatalogItemByIdAsync(Guid id, CancellationToken token)
+    [ProducesResponseType(200)]
+    [ProducesResponseType(404)]
+    public async Task<ActionResult<CatalogItemResponse>> GetCatalogItemByIdAsync(Guid id, CancellationToken token)
     {
         var response = await session.Query<CatalogItem>()
             .Where(c => c.Id == id && c.RemovedAt == null)

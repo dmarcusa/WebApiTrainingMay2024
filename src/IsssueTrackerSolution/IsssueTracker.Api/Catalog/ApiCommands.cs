@@ -8,11 +8,21 @@ namespace IssueTracker.Api.Catalog;
 
 [Authorize(Policy = "IsSoftwareAdmin")]
 [Route("/catalog")]
+[Produces("application/json")]
 public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocumentSession session) : ControllerBase
 {
+    /// <summary>
+    /// Add an item to the software catalog
+    /// </summary>
+    /// <param name="request"></param>
+    /// <param name="token"></param>
+    /// <returns></returns>
+    /// <response code="201"> The new software item</response>
+    /// <response code="400"> An app problem respoinse</response>
     [HttpPost]
-
-    public async Task<ActionResult> AddACatalogItemAsync(
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<CatalogItemResponse>> AddACatalogItemAsync(
        [FromBody] CreateCatalogItemRequest request,
        CancellationToken token)
     {
