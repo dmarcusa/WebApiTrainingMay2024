@@ -27,7 +27,7 @@ Content-Type: application/json
 GET {{apiUrl}}/catalog/
 Authorization: {{ordinaryUseToken}}
 ###
-GET {{apiUrl}}/catalog/b2750b7a-5132-49b3-b5be-b6b3bdd55724
+GET {{apiUrl}}/catalog/c1f60512-8ba0-46ac-a394-0c0611b5445c
 Authorization: {{ordinaryUseToken}}
 
 ###

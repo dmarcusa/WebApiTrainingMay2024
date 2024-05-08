@@ -1,9 +1,9 @@
 ﻿using FluentValidation;
-using IssueTracker.Api.Catalog;
 using Marten;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+namespace IssueTracker.Api.Catalog;
 [Authorize]
 [Route("/catalog")]
 public class ApiQueries(IQuerySession session) : ControllerBase
