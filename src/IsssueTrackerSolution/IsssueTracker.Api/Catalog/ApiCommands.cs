@@ -26,10 +26,8 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
 
         var entityToSave = request.MapToCatalogItem(userId);
 
-
         session.Store(entityToSave);
-        await session.SaveChangesAsync(); // Do the actual work!
-
+        await session.SaveChangesAsync(token); // Do the actual work!
 
         var response = entityToSave.MapToResponse();
         return CreatedAtRoute("catalog#get-by-id", new { id = response.Id }, response);
@@ -37,11 +35,11 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
     }
     [HttpDelete("{id:guid}")]
 
-    public async Task<ActionResult> RemoveCatalogItemAsync(Guid id)
+    public async Task<ActionResult> RemoveCatalogItemAsync(Guid id, CancellationToken token)
     {
 
         // see if the thing exists.
-        var storedItem = await session.LoadAsync<CatalogItem>(id);
+        var storedItem = await session.LoadAsync<CatalogItem>(id, token);
         if (storedItem != null)
         {
             var user = this.User.Claims.First(c => c.Type == ClaimTypes.NameIdentifier);
@@ -52,16 +50,17 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
             // if it does, do a "soft delete"
             storedItem.RemovedAt = DateTimeOffset.Now;
             session.Store(storedItem); // "Upsert"
-            await session.SaveChangesAsync(); // save it.
+            await session.SaveChangesAsync(token); // save it.
         }
         return NoContent();
     }
 
     // PUT //catalog/387...
     [HttpPut("{id:guid}")]
-    public async Task<ActionResult> ReplaceCatalogItemAsync(Guid id, [FromBody] ReplaceCatalogItemRequest request, CancellationToken token)
+    public async Task<ActionResult> ReplaceCatalogItemAsync(
+        Guid id, [FromBody] ReplaceCatalogItemRequest request, CancellationToken token)
     {
-        var item = await session.LoadAsync<CatalogItem>(id);
+        var item = await session.LoadAsync<CatalogItem>(id, token);
 
         if (item is null)
         {
@@ -74,7 +73,7 @@ public class ApiCommands(IValidator<CreateCatalogItemRequest> validator, IDocume
         item.Title = request.Title;
         item.Description = request.Description;
         session.Store(item);
-        await session.SaveChangesAsync();
+        await session.SaveChangesAsync(token);
         return Ok();
     }
 }
